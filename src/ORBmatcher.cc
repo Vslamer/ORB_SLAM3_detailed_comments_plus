@@ -1936,7 +1936,7 @@ namespace ORB_SLAM3
      * 步骤
      * Step 1 建立旋转直方图，用于检测旋转一致性
      * Step 2 计算当前帧和前一帧的平移向量
-     * Step 3 对于前一帧的每一个地图点，通过相机投影模型，得到投影到当前帧的像素坐标
+     * Step 3 对于前一帧的每一个地图点，通过相机投影模型，得到投影到当前帧的像素坐标(因为地图点坐标是不变的，相对于第一帧世界坐标)
      * Step 4 根据相机的前后前进方向来判断搜索尺度范围
      * Step 5 遍历候选匹配点，寻找距离最小的最佳匹配点 
      * Step 6 计算匹配点旋转角度差所在的直方图
@@ -1965,7 +1965,7 @@ namespace ORB_SLAM3
         //当前帧的相机位姿
         const Sophus::SE3f Tcw = CurrentFrame.GetPose();
         const Eigen::Vector3f twc = Tcw.inverse().translation();
-
+        // 上一帧相机位姿
         const Sophus::SE3f Tlw = LastFrame.GetPose();
         const Eigen::Vector3f tlc = Tlw * twc; 
 

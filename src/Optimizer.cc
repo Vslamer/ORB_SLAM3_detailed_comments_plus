@@ -2814,6 +2814,7 @@ void Optimizer::GlobalBundleAdjustemnt(Map *pMap, int nIterations, bool *pbStopF
 {
     // 获取地图中的所有关键帧
     vector<KeyFrame *> vpKFs = pMap->GetAllKeyFrames();
+    std::cout<<"全局优化关键帧数量"<<vpKFs.size()<<std::endl;
     // 获取地图中的所有地图点
     vector<MapPoint *> vpMP = pMap->GetAllMapPoints();
     // 调用GBA
@@ -2939,6 +2940,7 @@ void Optimizer::BundleAdjustment(
         optimizer.addVertex(vPoint);
 
         // 边的关系，其实就是点和关键帧之间观测的关系
+        // std::tuple理论上可以有无数个任意类型的成员变量，而std::pair只能是2个成员，因此在需要保存3个及以上的数据时就需要使用tuple元组了
         const map<KeyFrame *, tuple<int, int>> observations = pMP->GetObservations();
 
         // 边计数
